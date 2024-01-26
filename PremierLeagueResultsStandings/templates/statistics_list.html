@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Statystyk zespołów w danym sezonie</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista Statystyk</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Pozycja</th>
+            <th>Rozegrane mecze</th>
+            <th>Zwycięstwo</th>
+            <th>Remis</th>
+            <th>Przegrana</th>
+            <th>Bramki strzelone</th>
+            <th>Bramki stracone</th>
+            <th>Bilans bramek</th>
+            <th>Punkty</th>
+        </tr>
+        {% for stats in stats %}
+            <tr>
+                <td>{{ stats.id }}</td>
+                <td>{{ stats.rk }}</td>
+                <td>{{ stats.mp }}</td>
+                <td>{{ stats.w }}</td>
+                <td>{{ stats.d }}</td>
+                <td>{{ stats.l }}</td>
+                <td>{{ stats.gf }}</td>
+                <td>{{ stats.ga }}</td>
+                <td>{{ stats.gd }}</td>
+                <td>{{ stats.pts }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

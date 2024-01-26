@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sezony i Zespoły</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .details-cell {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sezony i Zespoły Premier League</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Sezon</th>
+                <th>Zespół</th>
+                <th>Szczegóły</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+                <tr>
+                    <td>{{ team.season_End_Year }}</td>
+                    <td>{{ team.team }}</td>
+                    <td class="details-cell"><a href="{% url 'team_detail' id=team.id %}">Szczegóły</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

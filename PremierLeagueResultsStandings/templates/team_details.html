@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Szczegóły Zespołu</title>
+</head>
+<body>
+<h1>Szczegóły Zespołu</h1>
+{#    <p>ID: {{ team.id }}</p>#}
+    <p>Sezon: {{ team.season_End_Year }}</p>
+    <p>Zespół: {{ team.team }}</p>
+
+    {% if stats %}
+            <h2>Statystyki</h2>
+            <p>Pozycja: {{ stats.rk }}</p>
+            <p>Rozegrane mecze: {{ stats.mp }}</p>
+            <p>Zwycięstwo: {{ stats.w }}</p>
+            <p>Remis: {{ stats.d }}</p>
+            <p>Przegrana: {{ stats.l }}</p>
+            <p>Bramki strzelone: {{ stats.gf }}</p>
+            <p>Bramki stracone: {{ stats.ga }}</p>
+            <p>Bilans bramek: {{ stats.gd }}</p>
+            <p>Punkty: {{ stats.pts }}</p>
+    {% else %}
+        <p >Brak statystyk zespołu.</p>
+{#        <a href="{% url 'add_stats' %}" class="add-stats-button">Dodaj statystyki gracza</a>#}
+{#         <a href="{% url 'add_stats' player_id=player.player_id %}" class="add-stats-button">Dodaj statystyki gracza</a>#}
+    {% endif %}
+
+{#<a href="{% url 'season_team' %}" >Powrót do głównej klasyfikacji</a>#}
+
+</body>
+</html>

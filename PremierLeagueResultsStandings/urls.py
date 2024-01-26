@@ -2,6 +2,7 @@ from django.urls import path
 from. import views
 
 urlpatterns = [
-    path('standings/', views.season_team, name='season_team'),
-
+    path('standings/', views.seasons_teams, name='seasons_teams'),
+    path('stats/', views.statistics_list, name='statistics_list'),
+    path('teaminseson/<int:id>', views.team_detail, name='team_detail'),
 ]
