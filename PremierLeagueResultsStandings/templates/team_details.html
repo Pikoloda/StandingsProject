@@ -22,12 +22,15 @@
             <p>Bilans bramek: {{ stats.gd }}</p>
             <p>Punkty: {{ stats.pts }}</p>
     {% else %}
-        <p >Brak statystyk zespołu.</p>
-{#        <a href="{% url 'add_stats' %}" class="add-stats-button">Dodaj statystyki gracza</a>#}
-{#         <a href="{% url 'add_stats' player_id=player.player_id %}" class="add-stats-button">Dodaj statystyki gracza</a>#}
+            <p >Brak statystyk zespołu.</p>
     {% endif %}
-
-{#<a href="{% url 'season_team' %}" >Powrót do głównej klasyfikacji</a>#}
+    {% if notes %}
+            <h2>Uwagi</h2>
+            <p>{{ notes.notes }}</p>
+    {% else %}
+            <p>Brak</p>
+    {% endif %}
+<a href="{% url 'seasons_teams' %}" >Powrót do głównej klasyfikacji</a>
 
 </body>
 </html>

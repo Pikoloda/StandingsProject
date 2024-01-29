@@ -14,7 +14,11 @@ def statistics_list(request):
         'stats': stats
     })
 
-def team_detail(request, id):
+def team_details(request, id):
     team = get_object_or_404(Team, pk=id)
     stats = team.stats
-    return render(request, 'team_details.html', {'team': team, 'stats': stats})
+    notes = team.notes
+    return render(request, 'team_details.html', {
+        'team': team,
+        'stats': stats,
+        'notes': notes})

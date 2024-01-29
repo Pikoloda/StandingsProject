@@ -35,7 +35,7 @@
                 <tr>
                     <td>{{ team.season_End_Year }}</td>
                     <td>{{ team.team }}</td>
-                    <td class="details-cell"><a href="{% url 'team_detail' id=team.id %}">Szczegóły</a></td>
+                    <td class="details-cell"><a href="{% url 'team_details' id=team.id %}">Szczegóły</a></td>
                 </tr>
             {% endfor %}
         </tbody>
