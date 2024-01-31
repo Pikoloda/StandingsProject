@@ -1,5 +1,5 @@
 from django.db import models
-
+from django import forms
 
 # Create your models here.
 class Team(models.Model):
@@ -23,3 +23,4 @@ class Stats(models.Model):
 
 class Notes(models.Model):
     notes = models.CharField(max_length=500)
+
