@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj Statystyki</title>
+</head>
+<body>
+    <h1>Dodaj Statystyki do Zespołu: {{ team.team }}</h1>
+    <form method="post" action="{% url 'add_statistics' team_id=team.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Dodaj Statystyki</button>
+    </form>
+    <a href="{% url 'team_details' team_id=team.id %}">Powrót do szczegółów zespołu</a>
+</body>
+</html>

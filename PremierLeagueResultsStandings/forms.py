@@ -17,3 +17,11 @@ class AddTeamForm(forms.Form):
             raise forms.ValidationError("Wprowadź poprawny sezon (równy lub większy niż ostatni sezon).")
 
         return season
+
+from django import forms
+from .models import Stats
+
+class StatsForm(forms.ModelForm):
+    class Meta:
+        model = Stats
+        fields = ['rk', 'mp', 'w', 'd', 'l', 'gf', 'ga', 'gd', 'pts']
