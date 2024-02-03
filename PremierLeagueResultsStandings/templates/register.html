@@ -1,17 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rejestracja</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Rejestracja{% endblock %}
+
+{% block content %}
     <h2>Zarejestruj się</h2>
     <form method="post" action="{% url 'register' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        <label for="id_username">Nazwa użytkownika:</label> {{ form.username }}
+        <br>
+        <label for="id_password1">Hasło:</label> {{ form.password1 }}
+        <br>
+        <label for="id_password2">Potwierdź hasło:</label> {{ form.password2 }}
+        <br>
         <button type="submit">Zarejestruj się</button>
     </form>
-    <p> <a href="{% url 'home' %}">Powrót do strony głównej</a></p>
-</body>
-</html>
+    <p><a href="{% url 'home' %}">Powrót do strony głównej</a></p>
+{% endblock %}

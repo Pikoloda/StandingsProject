@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logowanie</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Logowanie{% endblock %}
+
+{% block content %}
     <h2>Zaloguj się</h2>
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
@@ -13,5 +10,4 @@
         <button type="submit">Zaloguj się</button>
     </form>
     <p>Nie masz jeszcze konta? <a href="{% url 'register' %}">Zarejestruj się</a></p>
-</body>
-</html>
+{% endblock %}

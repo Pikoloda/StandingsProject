@@ -1,46 +1,42 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>Szczegóły Zespołu</title>#}
-{#</head>#}
-{#<body>#}
-{#<h1>Szczegóły Zespołu</h1>#}
-{#    <p>ID: {{ team.id }}</p>#}
+{#{% extends 'base.html' %}#}
+{##}
+{#{% block title %}Szczegóły Zespołu{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#    <h1>Szczegóły Zespołu</h1>#}
+{#    <p>Id: {{ team.id }}</p>#}
 {#    <p>Sezon: {{ team.season_End_Year }}</p>#}
 {#    <p>Zespół: {{ team.team }}</p>#}
 {##}
 {#    {% if stats %}#}
-{#            <h2>Statystyki</h2>#}
-{#            <p>Pozycja: {{ stats.rk }}</p>#}
-{#            <p>Rozegrane mecze: {{ stats.mp }}</p>#}
-{#            <p>Zwycięstwo: {{ stats.w }}</p>#}
-{#            <p>Remis: {{ stats.d }}</p>#}
-{#            <p>Przegrana: {{ stats.l }}</p>#}
-{#            <p>Bramki strzelone: {{ stats.gf }}</p>#}
-{#            <p>Bramki stracone: {{ stats.ga }}</p>#}
-{#            <p>Bilans bramek: {{ stats.gd }}</p>#}
-{#            <p>Punkty: {{ stats.pts }}</p>#}
+{#        <h2>Statystyki</h2>#}
+{#        <p>Pozycja: {{ stats.rk }}</p>#}
+{#        <p>Rozegrane mecze: {{ stats.mp }}</p>#}
+{#        <p>Zwycięstwa: {{ stats.w }}</p>#}
+{#        <p>Remisy: {{ stats.d }}</p>#}
+{#        <p>Przegrane: {{ stats.l }}</p>#}
+{#        <p>Bramki strzelone: {{ stats.gf }}</p>#}
+{#        <p>Bramki stracone: {{ stats.ga }}</p>#}
+{#        <p>Bilans bramek: {{ stats.gd }}</p>#}
+{#        <p>Punkty: {{ stats.pts }}</p>#}
 {#    {% else %}#}
-{#            <p >Brak statystyk zespołu.</p>#}
+{#        <p>Brak statystyk zespołu.</p>#}
 {#    {% endif %}#}
-{#    {% if notes %}#}
-{#            <h2>Uwagi</h2>#}
-{#            <p>{{ notes.notes }}</p>#}
-{#    {% else %}#}
-{#            <p>Brak</p>#}
-{#    {% endif %}#}
-{#<a href="{% url 'seasons_teams' %}" >Powrót do klasyfikacji głównej</a>#}
 {##}
-{#</body>#}
-{#</html>#}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Szczegóły Zespołu</title>
-</head>
-<body>
+{#    {% if notes %}#}
+{#        <h2>Uwagi</h2>#}
+{#        <p>{{ notes.notes }}</p>#}
+{#    {% else %}#}
+{#        <p>Brak uwag.</p>#}
+{#    {% endif %}#}
+{##}
+{#    <a href="{% url 'seasons_teams' %}">Powrót do klasyfikacji głównej</a>#}
+{#{% endblock %}#}
+{% extends 'base.html' %}
+
+{% block title %}Szczegóły Zespołu{% endblock %}
+
+{% block content %}
     <h1>Szczegóły Zespołu</h1>
     <p>Sezon: {{ team.season_End_Year }}</p>
     <p>Zespół: {{ team.team }}</p>
@@ -57,16 +53,20 @@
         <p>Bilans bramek: {{ stats.gd }}</p>
         <p>Punkty: {{ stats.pts }}</p>
     {% else %}
-        <p>Brak statystyk zespołu.</p>
+        <div>
+        <!-- Dodaj link do dodawania statystyk -->
+        <a href="{% url 'add_statistics' team_id=team.id %}">Dodaj Statystyki</a>
+        </div>
     {% endif %}
-
     {% if notes %}
         <h2>Uwagi</h2>
         <p>{{ notes.notes }}</p>
     {% else %}
-        <p>Brak uwag.</p>
+        <div>
+        <a href="{% url 'add_notes' team_id=team.id %}">Dodaj Uwagi</a>
+        </div>
     {% endif %}
-
+        <div>
     <a href="{% url 'seasons_teams' %}">Powrót do klasyfikacji głównej</a>
-</body>
-</html>
+        </div>
+{% endblock %}

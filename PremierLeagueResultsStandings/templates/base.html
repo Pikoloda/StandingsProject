@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Page Title{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        form {
+            margin: 20px auto;
+            max-width: 300px;
+            text-align: left;
+        }
+
+        label, input, button {
+            display: block;
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .add-team-button {
+            display: {% if user.is_authenticated %}inline{% else %}none{% endif %};
+        }
+
+        .logout-button {
+            display: {% if user.is_authenticated %}inline{% else %}none{% endif %};
+        }
+    </style>
+</head>
+<body>
+    {% block content %}{% endblock %}
+{#    <a class="logout-button" href="{% url 'logout' %}"><button>Wyloguj się</button></a>#}
+</body>
+</html>

@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona Główna</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Strona Główna{% endblock %}
+
+{% block content %}
     <h1>Klasyfikacja drużyn Premier League</h1>
     <a href="{% url 'register' %}"><button>Zarejestruj się</button></a>
     <a href="{% url 'login' %}"><button>Zaloguj się</button></a>
     <a href="{% url 'seasons_teams' %}"><button>Przejdź do Tabeli</button></a>
-</body>
-</html>
+{% endblock %}

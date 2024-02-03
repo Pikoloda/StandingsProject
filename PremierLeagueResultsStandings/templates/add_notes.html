@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Dodaj Uwagi{% endblock %}
+
+{% block content %}
+    <h1>Dodaj Uwagi</h1>
+    <form method="post" action="{% url 'add_notes' team_id=team.id %}">
+        {% csrf_token %}
+        <label for="notes">Uwagi:</label>
+        <textarea id="notes" name="notes" rows="4" cols="50" required></textarea>
+        <button type="submit">Dodaj Uwagi</button>
+    </form>
+    <a href="{% url 'seasons_teams' %}">Powrót do klasyfikacji głównej</a>
+{% endblock %}

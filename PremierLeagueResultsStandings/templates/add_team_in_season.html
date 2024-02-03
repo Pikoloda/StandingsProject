@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dodaj Zespół w Sezonie</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Dodaj Zespół w Sezonie{% endblock %}
+
+{% block content %}
     <h2>Dodaj Zespół w Sezonie</h2>
     {% if error_message %}
         <p style="color: red;">{{ error_message }}</p>
@@ -21,5 +18,4 @@
         <button type="submit">Dodaj Zespół</button>
     </form>
     <a href="{% url 'seasons_teams' %}">Powrót do głównej klasyfikacji</a>
-</body>
-</html>
+{% endblock %}

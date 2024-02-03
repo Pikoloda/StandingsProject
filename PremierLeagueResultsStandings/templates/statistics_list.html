@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista Statystyk zespołów w danym sezonie</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+{% extends 'base.html' %}
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-    </style>
-</head>
-<body>
+{% block title %}Lista Statystyk zespołów w danym sezonie{% endblock %}
+
+{% block content %}
     <h1>Lista Statystyk</h1>
     <table>
         <tr>
@@ -46,5 +32,4 @@
             </tr>
         {% endfor %}
     </table>
-</body>
-</html>
+{% endblock %}
