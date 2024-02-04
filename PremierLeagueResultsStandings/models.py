@@ -1,13 +1,12 @@
 from django.db import models
-from django import forms
 
-# Create your models here.
+
 class Team(models.Model):
-    # team_seazon_id = models.AutoField(primary_key=True)
     season_End_Year = models.IntegerField()
     team = models.CharField(max_length=100)
     stats = models.ForeignKey('Stats', on_delete=models.SET_NULL, null=True, blank=True)
     notes = models.ForeignKey('Notes', on_delete=models.SET_NULL, null=True, blank=True)
+
 
 class Stats(models.Model):
     rk = models.IntegerField(null=True)
@@ -23,4 +22,3 @@ class Stats(models.Model):
 
 class Notes(models.Model):
     notes = models.CharField(max_length=500, null=True)
-

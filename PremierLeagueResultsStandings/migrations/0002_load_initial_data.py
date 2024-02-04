@@ -9,7 +9,6 @@ def load_initial_data(apps, schema_editor):
     with open('PremierLeagueStandings.csv', 'r', encoding='utf-8') as input_file:
         data = csv.DictReader(input_file, delimiter=',')
         for row in data:
-
             team_stats = Stats.objects.create(
                 rk=row['Rk'],
                 mp=row['MP'],

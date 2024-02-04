@@ -46,17 +46,20 @@
         .logout-button {
             display: {% if user.is_authenticated %}inline{% else %}none{% endif %};
         }
+
         .center-buttons {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             margin-top: 20px;
+            position: relative;
         }
 
     </style>
 </head>
 <body>
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 </body>
 </html>
+

@@ -1,7 +1,6 @@
 from django.urls import path
-from. import views
-from. views import register, user_login, login_view
-
+from . import views
+from .views import register, user_login, login_view
 
 urlpatterns = [
     path('standings/', views.seasons_teams, name='seasons_teams'),
