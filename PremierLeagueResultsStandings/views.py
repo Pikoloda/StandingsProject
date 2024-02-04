@@ -213,6 +213,26 @@ def add_team_in_season(request):
     return render(request, 'add_team_in_season.html', {'form': form})
 
 
+# def add_statistics(request, team_id):
+#     team = get_object_or_404(Team, pk=team_id)
+#
+#     if request.method == 'POST':
+#         form = StatsForm(request.POST)
+#         if form.is_valid():
+#             stats = form.save(commit=False)
+#             stats.team = team
+#             stats.save()
+#
+#             # Przekieruj na stronę zespołu
+#             return redirect('seasons_teams')
+#
+#     else:
+#         form = StatsForm()
+#
+#     return render(request, 'add_statistics.html', {
+#         'form': form,
+#         'team': team,
+#     })
 def add_statistics(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
 
@@ -224,7 +244,7 @@ def add_statistics(request, team_id):
             stats.save()
 
             # Przekieruj na stronę zespołu
-            return redirect('seasons_teams')
+            return redirect('team_details', team_id=team.id)
 
     else:
         form = StatsForm()
@@ -233,7 +253,6 @@ def add_statistics(request, team_id):
         'form': form,
         'team': team,
     })
-
 def add_notes(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
 

@@ -32,6 +32,44 @@
 {##}
 {#    <a href="{% url 'seasons_teams' %}">Powrót do klasyfikacji głównej</a>#}
 {#{% endblock %}#}
+{#{% extends 'base.html' %}#}
+{##}
+{#{% block title %}Szczegóły Zespołu{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#    <h1>Szczegóły Zespołu</h1>#}
+{#    <p>Sezon: {{ team.season_End_Year }}</p>#}
+{#    <p>Zespół: {{ team.team }}</p>#}
+{##}
+{#    {% if stats %}#}
+{#        <h2>Statystyki</h2>#}
+{#        <p>Pozycja: {{ stats.rk }}</p>#}
+{#        <p>Rozegrane mecze: {{ stats.mp }}</p>#}
+{#        <p>Zwycięstwa: {{ stats.w }}</p>#}
+{#        <p>Remisy: {{ stats.d }}</p>#}
+{#        <p>Przegrane: {{ stats.l }}</p>#}
+{#        <p>Bramki strzelone: {{ stats.gf }}</p>#}
+{#        <p>Bramki stracone: {{ stats.ga }}</p>#}
+{#        <p>Bilans bramek: {{ stats.gd }}</p>#}
+{#        <p>Punkty: {{ stats.pts }}</p>#}
+{#    {% else %}#}
+{#        <div>#}
+{#        <!-- Dodaj link do dodawania statystyk -->#}
+{#        <a href="{% url 'add_statistics' team_id=team.id %}">Dodaj Statystyki</a>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#    {% if notes %}#}
+{#        <h2>Uwagi</h2>#}
+{#        <p>{{ notes.notes }}</p>#}
+{#    {% else %}#}
+{#        <div>#}
+{#        <a href="{% url 'add_notes' team_id=team.id %}">Dodaj Uwagi</a>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#        <div>#}
+{#    <a href="{% url 'seasons_teams' %}">Powrót do klasyfikacji głównej</a>#}
+{#        </div>#}
+{#{% endblock %}#}
 {% extends 'base.html' %}
 
 {% block title %}Szczegóły Zespołu{% endblock %}
@@ -54,8 +92,7 @@
         <p>Punkty: {{ stats.pts }}</p>
     {% else %}
         <div>
-        <!-- Dodaj link do dodawania statystyk -->
-        <a href="{% url 'add_statistics' team_id=team.id %}">Dodaj Statystyki</a>
+            <a href="{% url 'add_statistics' team_id=team.id %}">Dodaj Statystyki</a>
         </div>
     {% endif %}
     {% if notes %}
@@ -63,10 +100,11 @@
         <p>{{ notes.notes }}</p>
     {% else %}
         <div>
-        <a href="{% url 'add_notes' team_id=team.id %}">Dodaj Uwagi</a>
+            <a href="{% url 'add_notes' team_id=team.id %}">Dodaj Uwagi</a>
         </div>
     {% endif %}
-        <div>
-    <a href="{% url 'seasons_teams' %}">Powrót do klasyfikacji głównej</a>
-        </div>
+
+    <div>
+        <a href="{% url 'seasons_teams' %}">Powrót do klasyfikacji głównej</a>
+    </div>
 {% endblock %}

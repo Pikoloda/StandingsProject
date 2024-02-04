@@ -4,7 +4,9 @@
 
 {% block content %}
     <h1>Klasyfikacja drużyn Premier League</h1>
-    <a href="{% url 'register' %}"><button>Zarejestruj się</button></a>
-    <a href="{% url 'login' %}"><button>Zaloguj się</button></a>
-    <a href="{% url 'seasons_teams' %}"><button>Przejdź do Tabeli</button></a>
+    <div class="center-buttons">
+        <a href="{% url 'register' %}"><button>Zarejestruj się</button></a>
+        <a href="{% url 'login' %}"><button>Zaloguj się</button></a>
+        <a href="{% url 'seasons_teams' %}"><button>Przejdź do Tabeli</button></a>
+    </div>
 {% endblock %}

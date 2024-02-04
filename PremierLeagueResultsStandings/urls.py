@@ -6,7 +6,7 @@ from. views import register, user_login, login_view
 urlpatterns = [
     path('standings/', views.seasons_teams, name='seasons_teams'),
     path('stats/', views.statistics_list, name='statistics_list'),
-    path('teaminseson/<int:team_id>', views.team_details, name='team_details'),
+    path('team_details/<int:team_id>', views.team_details, name='team_details'),
     path('add_team_in_season/', views.add_team_in_season, name='add_team_in_season'),
     path('home/', views.home, name='home'),
     path('register/', views.register, name='register'),

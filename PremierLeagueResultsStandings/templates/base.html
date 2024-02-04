@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Page Title{% endblock %}</title>
     <style>
+
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -45,10 +46,17 @@
         .logout-button {
             display: {% if user.is_authenticated %}inline{% else %}none{% endif %};
         }
+        .center-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
     </style>
 </head>
 <body>
     {% block content %}{% endblock %}
-{#    <a class="logout-button" href="{% url 'logout' %}"><button>Wyloguj się</button></a>#}
 </body>
 </html>
