@@ -10,6 +10,7 @@ from .forms import AddTeamForm
 from .forms import StatsForm
 from .forms import NotesForm
 
+
 def seasons_teams(request):
     teams = Team.objects.all()
     return render(request, 'seasons_teams.html', {
@@ -54,11 +55,33 @@ def home(request):
     return render(request, 'home.html')
 
 
+# def register(request):
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             # Przekierowanie do season_teams.html po udanej rejestracji
+#             return redirect('seasons_teams')
+#     else:
+#         form = UserCreationForm()
+#
+#     return render(request, 'register.html', {'form': form})
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+
+            # Logowanie użytkownika po udanej rejestracji
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+
             # Przekierowanie do season_teams.html po udanej rejestracji
             return redirect('seasons_teams')
     else:
@@ -177,6 +200,40 @@ login_view = CustomLoginView.as_view()
 #
 #     return render(request, 'add_team_in_season.html')
 
+# def add_team_in_season(request):
+#     if request.method == 'POST':
+#         form = AddTeamForm(request.POST)
+#         if form.is_valid():
+#             season = form.cleaned_data['season']
+#             team_name = form.cleaned_data['team_name']
+#
+#             # Sprawdź, czy zespół o danej nazwie już istnieje w danym sezonie
+#             if Team.objects.filter(season_End_Year=season, team=team_name).exists():
+#                 error_message = "Taki zespół już istnieje w tym sezonie."
+#                 return render(request, 'add_team_in_season.html', {'form': form, 'error_message': error_message})
+#
+#             # Sprawdź, czy sezon nie ma już 20 drużyn
+#             if Team.objects.filter(season_End_Year=season).count() >= 20:
+#                 error_message = "Już jest komplet drużyn w tym sezonie."
+#                 return render(request, 'add_team_in_season.html', {'form': form, 'error_message': error_message})
+#
+#             # Sprawdź, czy wprowadzony sezon jest większy lub równy niż ostatni sezon
+#             last_season = Team.objects.order_by('-season_End_Year').first()
+#             if last_season and season < last_season.season_End_Year:
+#                 error_message = "Wprowadź poprawny sezon (równy lub większy niż ostatni sezon)."
+#                 return render(request, 'add_team_in_season.html', {'form': form, 'error_message': error_message})
+#
+#             # Zapisz nowy zespół w sezonie
+#             new_team = Team(season_End_Year=season, team=team_name)
+#             new_team.save()
+#
+#             # Przekieruj na stronę z dodatkowymi informacjami o drużynie
+#             return redirect('add_statistics', team_id=new_team.id)
+#
+#     else:
+#         form = AddTeamForm()
+#
+#     return render(request, 'add_team_in_season.html', {'form': form})
 def add_team_in_season(request):
     if request.method == 'POST':
         form = AddTeamForm(request.POST)
@@ -184,27 +241,29 @@ def add_team_in_season(request):
             season = form.cleaned_data['season']
             team_name = form.cleaned_data['team_name']
 
-            # Sprawdź, czy zespół o danej nazwie już istnieje w danym sezonie
             if Team.objects.filter(season_End_Year=season, team=team_name).exists():
                 error_message = "Taki zespół już istnieje w tym sezonie."
                 return render(request, 'add_team_in_season.html', {'form': form, 'error_message': error_message})
 
-            # Sprawdź, czy sezon nie ma już 20 drużyn
             if Team.objects.filter(season_End_Year=season).count() >= 20:
                 error_message = "Już jest komplet drużyn w tym sezonie."
                 return render(request, 'add_team_in_season.html', {'form': form, 'error_message': error_message})
 
-            # Sprawdź, czy wprowadzony sezon jest większy lub równy niż ostatni sezon
             last_season = Team.objects.order_by('-season_End_Year').first()
             if last_season and season < last_season.season_End_Year:
                 error_message = "Wprowadź poprawny sezon (równy lub większy niż ostatni sezon)."
                 return render(request, 'add_team_in_season.html', {'form': form, 'error_message': error_message})
 
-            # Zapisz nowy zespół w sezonie
             new_team = Team(season_End_Year=season, team=team_name)
             new_team.save()
 
-            # Przekieruj na stronę z dodatkowymi informacjami o drużynie
+            stats = Stats.objects.create()
+            notes = Notes.objects.create()
+
+            new_team.stats = stats
+            new_team.notes = notes
+            new_team.save()
+
             return redirect('add_statistics', team_id=new_team.id)
 
     else:
@@ -233,18 +292,98 @@ def add_team_in_season(request):
 #         'form': form,
 #         'team': team,
 #     })
+# def add_statistics(request, team_id):
+#     team = get_object_or_404(Team, pk=team_id)
+#
+#     if request.method == 'POST':
+#         form = StatsForm(request.POST)
+#         if form.is_valid():
+#             stats_data = form.cleaned_data
+#             # Sprawdź, czy którykolwiek z pól formularza zawiera wartość
+#             if any(stats_data.values()):
+#                 stats = form.save(commit=False)
+#                 stats.team = team
+#                 stats.save()
+#                 # Przekieruj na stronę zespołu
+#                 return redirect('team_details', team_id=team.id)
+#
+#     else:
+#         form = StatsForm()
+#
+#     return render(request, 'add_statistics.html', {
+#         'form': form,
+#         'team': team,
+#     })
+
+# def add_statistics(request, team_id):
+#     team = get_object_or_404(Team, pk=team_id)
+#
+#     if request.method == 'POST':
+#         form = StatsForm(request.POST)
+#         if form.is_valid():
+#             stats = form.save(commit=False)
+#             stats.team = team
+#             stats.save()
+#             # Przekieruj na stronę zespołu
+#             return redirect('team_details', team_id=team.id)
+#
+#     else:
+#         form = StatsForm()
+#
+#     return render(request, 'add_statistics.html', {
+#         'form': form,
+#         'team': team,
+#     })
+# Widok add_statistics
+from django.db.models import Q
+
+
+# def add_statistics(request, team_id):
+#     team = get_object_or_404(Team, pk=team_id)
+#
+#     if request.method == 'POST':
+#         form = StatsForm(request.POST)
+#         if form.is_valid():
+#             # Zamień None na pusty ciąg znaków w polach formularza
+#             cleaned_data = {key: value if value is not None else '' for key, value in form.cleaned_data.items()}
+#
+#             stats, created = Stats.objects.get_or_create(team=team, defaults=cleaned_data)
+#
+#             if not created:
+#                 # Jeśli rekord już istnieje, zaktualizuj istniejące dane
+#                 stats.__dict__.update(cleaned_data)
+#                 stats.save()
+#
+#             # Przekieruj na stronę zespołu
+#             return redirect('team_details', team_id=team.id)
+#
+#     else:
+#         form = StatsForm()
+#
+#     return render(request, 'add_statistics.html', {
+#         'form': form,
+#         'team': team,
+#     })
+# Widok add_statistics
+from django.shortcuts import redirect
+
+
 def add_statistics(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
 
     if request.method == 'POST':
         form = StatsForm(request.POST)
         if form.is_valid():
-            stats = form.save(commit=False)
-            stats.team = team
-            stats.save()
+            cleaned_data = {key: value if value is not None else '' for key, value in form.cleaned_data.items()}
 
-            # Przekieruj na stronę zespołu
-            return redirect('team_details', team_id=team.id)
+            stats, created = Stats.objects.get_or_create(team=team, defaults=cleaned_data)
+
+            if not created:
+                stats.__dict__.update(cleaned_data)
+                stats.save()
+
+            # Przekieruj na stronę dodawania uwag zespołu
+            return redirect('add_notes', team_id=team.id)
 
     else:
         form = StatsForm()
@@ -253,15 +392,62 @@ def add_statistics(request, team_id):
         'form': form,
         'team': team,
     })
+
+
+# Formularz StatsForm
+from django import forms
+
+
+
+
+
+# def add_notes(request, team_id):
+#     team = get_object_or_404(Team, pk=team_id)
+#
+#     if request.method == 'POST':
+#         form = NotesForm(request.POST)
+#         if form.is_valid():
+#             notes = form.save(commit=False)
+#             notes.team = team
+#             notes.save()
+#             return redirect('team_details', team_id=team_id)
+#     else:
+#         form = NotesForm()
+#
+# #     return render(request, 'add_notes.html', {'form': form, 'team': team})
+# def add_notes(request, team_id):
+#     team = get_object_or_404(Team, pk=team_id)
+#
+#     if request.method == 'POST':
+#         form = NotesForm(request.POST)
+#         if form.is_valid():
+#             notes = form.save(commit=False)
+#             notes.team = team
+#
+#             # Dodaj statystyki zespołu do notatki
+#             notes.stats = team.stats
+#             notes.save()
+#
+#             return redirect('team_details', team_id=team_id)
+#     else:
+#         form = NotesForm()
+#
+#     return render(request, 'add_notes.html', {'form': form, 'team': team})
+
 def add_notes(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
 
     if request.method == 'POST':
         form = NotesForm(request.POST)
         if form.is_valid():
-            notes = form.save(commit=False)
-            notes.team = team
-            notes.save()
+            cleaned_data = {key: value if value is not None else '' for key, value in form.cleaned_data.items()}
+
+            notes, created = Notes.objects.get_or_create(team=team, defaults=cleaned_data)
+
+            if not created:
+                notes.__dict__.update(cleaned_data)
+                notes.save()
+
             return redirect('team_details', team_id=team_id)
     else:
         form = NotesForm()

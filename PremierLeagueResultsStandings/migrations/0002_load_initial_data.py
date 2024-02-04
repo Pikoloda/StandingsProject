@@ -9,7 +9,7 @@ def load_initial_data(apps, schema_editor):
     with open('PremierLeagueStandings.csv', 'r', encoding='utf-8') as input_file:
         data = csv.DictReader(input_file, delimiter=',')
         for row in data:
-            # Tworzenie nowego zestawu Stats dla każdego wiersza
+
             team_stats = Stats.objects.create(
                 rk=row['Rk'],
                 mp=row['MP'],
@@ -22,12 +22,10 @@ def load_initial_data(apps, schema_editor):
                 pts=row['Pts']
             )
 
-            # Tworzenie nowego zestawu Notes dla każdego wiersza
             team_notes = Notes.objects.create(
                 notes=row['Notes']
             )
 
-            # Tworzenie nowego obiektu Team i przypisanie do niego utworzonych zestawów Stats i Notes
             Team.objects.create(
                 season_End_Year=row['Season_End_Year'],
                 team=row['Team'],

@@ -1,6 +1,6 @@
 from django import forms
-from django import forms
 from .models import Stats
+from .models import Notes
 
 class AddTeamForm(forms.Form):
     season = forms.IntegerField(label='Sezon', min_value=1)
@@ -24,8 +24,9 @@ class StatsForm(forms.ModelForm):
     class Meta:
         model = Stats
         fields = ['rk', 'mp', 'w', 'd', 'l', 'gf', 'ga', 'gd', 'pts']
-from django import forms
-from .models import Notes
+
+
+
 
 class NotesForm(forms.ModelForm):
     class Meta:
