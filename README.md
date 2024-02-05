@@ -7,4 +7,5 @@ Krótkie wprowadzenie do aplikacji
 2. Wykonać makemigrations, następnie migrate
 3. Otworzyć w przeglądarce strone servera
 4. Zarestrować albo zalogować usera
-5. Cieszyć się PremierLeague
+5. Tylko dla zalogowanych userów są dostępne funkcje dodania drużyny, statystyk i uwag
+6. Cieszyć się PremierLeague
