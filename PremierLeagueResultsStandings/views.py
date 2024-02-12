@@ -1,22 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Team, Stats, Notes
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, logout, authenticate
-from django.urls import reverse
-from django.contrib.auth.views import LoginView
 from .forms import AddTeamForm, StatsForm, NotesForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-# def seasons_teams(request):
-#     teams = Team.objects.all()
-#     return render(request, 'seasons_teams.html', {
-#         'teams': teams,
-#         'user': request.user
-#     })
-
 def seasons_teams(request):
     teams_list = Team.objects.all()
+
+    season = request.GET.get('season')
+    if season:
+        teams_list = teams_list.filter(season_End_Year=season)
+
+    team_name = request.GET.get('team')
+    if team_name:
+        teams_list = teams_list.filter(team__icontains=team_name)
+
     paginator = Paginator(teams_list, 15)
     page = request.GET.get('page', 1)
     try:
@@ -26,7 +24,9 @@ def seasons_teams(request):
     except EmptyPage:
         teams = paginator.page(paginator.num_pages)
 
-    return render(request, 'seasons_teams.html', {'teams': teams, 'user': request.user})
+    seasons = Team.objects.values_list('season_End_Year', flat=True).distinct()
+
+    return render(request, 'seasons_teams.html', {'teams': teams, 'user': request.user, 'seasons': seasons})
 
 
 def statistics_list(request):
@@ -34,7 +34,6 @@ def statistics_list(request):
     return render(request, 'statistics_list.html', {
         'stats': stats
     })
-
 
 def team_details(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
@@ -49,57 +48,11 @@ def team_details(request, team_id):
         notes = None
     return render(request, 'team_details.html', {'team': team, 'stats': stats, 'notes': notes})
 
-
 def home(request):
     return render(request, 'home.html')
 
-
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('seasons_teams')
-    else:
-        form = UserCreationForm()
-    return render(request, 'register.html', {'form': form})
-
-
-def user_login(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return render(request, 'seasons_teams.html')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'registration/login.html', {'form': form})
-
-
 def standings(request):
     return render(request, 'seasons_teams.html')
-
-
-def user_logout(request):
-    logout(request)
-    return redirect('home')
-
-
-class CustomLoginView(LoginView):
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        return response
-
-    def get_success_url(self):
-        return reverse('seasons_teams')
-
-login_view = CustomLoginView.as_view()
-
 
 def add_team_in_season(request):
     if request.method == 'POST':
@@ -133,7 +86,6 @@ def add_team_in_season(request):
         form = AddTeamForm()
     return render(request, 'add_team_in_season.html', {'form': form})
 
-
 def add_statistics(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
 
@@ -152,7 +104,6 @@ def add_statistics(request, team_id):
         'form': form,
         'team': team,
     })
-
 
 def add_notes(request, team_id):
     team = get_object_or_404(Team, pk=team_id)

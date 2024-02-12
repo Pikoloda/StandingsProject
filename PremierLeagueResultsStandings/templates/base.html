@@ -56,10 +56,39 @@
             position: relative;
         }
 
+        .left-section {
+            text-align: left;
+            margin-right: auto;
+        }
+
+        .right-section {
+            text-align: right;
+            margin-left: auto;
+        }
+
+        .button-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .button-label {
+            margin-bottom: 10px;
+        }
+
+        .button-label label {
+            margin-right: 10px;
+        }
+
+        .central-button {
+            display: inline-block;
+            margin: 0;
+            width: auto;
+        }
+
     </style>
 </head>
 <body>
 {% block content %}{% endblock %}
 </body>
 </html>
-

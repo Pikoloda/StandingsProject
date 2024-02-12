@@ -2,16 +2,15 @@ from django import forms
 from .models import Stats, Notes
 
 
-
 class AddTeamForm(forms.Form):
-    season = forms.IntegerField(label='Sezon', min_value=1)
-    team_name = forms.CharField(label='Nazwa Zespołu', max_length=100)
+    season = forms.IntegerField(label='Sezon', min_value=1, required=False)
+    team_name = forms.CharField(label='Nazwa Zespołu', max_length=100, required=False)
 
     def clean_season(self):
         season = self.cleaned_data.get('season')
 
-        if season < 1:
-            raise forms.ValidationError("Wprowadź poprawny sezon (równy lub większy niż ostatni sezon).")
+        if season and season < 1:
+            raise forms.ValidationError("Wprowadź poprawny sezon (równy lub większy niż 1).")
 
         return season
 
